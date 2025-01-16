@@ -1,4 +1,4 @@
-package com.example.giphyapp
+package com.rabin2123.data
 
 import org.junit.Test
 

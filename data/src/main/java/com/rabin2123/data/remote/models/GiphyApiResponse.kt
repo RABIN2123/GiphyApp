@@ -6,13 +6,17 @@ data class GiphyApiResponse(
     @SerializedName("data")
     val data: List<DataObject>,
     @SerializedName("meta")
-    val meta: Status
+    val meta: Status,
+    @SerializedName("pagination")
+    val pagination: Pagination
 ) {
     data class DataObject(
         @SerializedName("id")
         val id: String,
         @SerializedName("images")
-        val images: Images
+        val images: Images,
+        @SerializedName("title")
+        val title: String
     )
     data class Images(
         @SerializedName("fixed_width_downsampled")
@@ -27,5 +31,9 @@ data class GiphyApiResponse(
     data class Status(
         @SerializedName("status")
         val status: Int
+    )
+    data class Pagination(
+        @SerializedName("offset")
+        val offset: Int
     )
 }

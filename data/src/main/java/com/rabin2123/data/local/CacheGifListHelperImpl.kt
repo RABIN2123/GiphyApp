@@ -2,9 +2,13 @@ package com.rabin2123.data.local
 
 import kotlinx.coroutines.flow.Flow
 
-class CacheGifListHelperImpl(private val dao: CacheGifListDao) : CacheGifListHelper {
-    override fun getAllGifList(): Flow<List<CacheGifEntity>> {
+internal class CacheGifListHelperImpl(private val dao: CacheGifListDao) : CacheGifListHelper {
+    override suspend fun getAllGifList(): List<CacheGifEntity> {
         return dao.getAllGifList()
+    }
+
+    override suspend fun searchGifList(title: String): List<CacheGifEntity> {
+        return dao.searchLocalGif(title)
     }
 
     override suspend fun insertAllGifList(cacheGifList: List<CacheGifEntity>) {

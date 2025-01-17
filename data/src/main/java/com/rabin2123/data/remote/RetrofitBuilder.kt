@@ -10,5 +10,5 @@ object RetrofitBuilder {
 
     private fun getRetrofit() =
         Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
-    val GiphyService: GiphyService = getRetrofit().create(GiphyService::class.java)
+    val giphyService: GiphyService = getRetrofit().create(GiphyService::class.java)
 }

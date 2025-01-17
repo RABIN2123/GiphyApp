@@ -1,11 +1,9 @@
 package com.rabin2123.data.local
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CacheGifListDao {
@@ -13,7 +11,10 @@ interface CacheGifListDao {
     suspend fun insertAllGifList(cacheGifList: List<CacheGifEntity>)
 
     @Query("SELECT * FROM ${CacheGifEntity.TABLE_NAME}")
-    fun getAllGifList(): Flow<List<CacheGifEntity>>
+    suspend fun getAllGifList(): List<CacheGifEntity>
+
+    @Query("SELECT * FROM ${CacheGifEntity.TABLE_NAME} WHERE ${CacheGifEntity.COLUMN_TITLE} LIKE :searchTitle")
+    suspend fun searchLocalGif(searchTitle: String): List<CacheGifEntity>
 
     @Query("DELETE FROM ${CacheGifEntity.TABLE_NAME}")
     suspend fun deleteAllGifList()

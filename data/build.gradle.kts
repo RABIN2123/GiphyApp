@@ -44,6 +44,7 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.paging.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

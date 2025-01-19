@@ -47,16 +47,10 @@ internal class FullscreenFragment : Fragment() {
         vpFullscreenGif.adapter = adapter
     }
 
-    private var checkPos = true
-
     private fun dataObserver() {
         lifecycleScope.launch {
             vm.gifList.collectLatest { value ->
                 adapter.submitData(value)
-                if (checkPos) {
-                    binding?.vpFullscreenGif?.setCurrentItem(selectedIndex, false)
-                    checkPos = false
-                }
             }
         }
     }

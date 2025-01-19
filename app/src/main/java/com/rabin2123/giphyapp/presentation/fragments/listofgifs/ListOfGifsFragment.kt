@@ -50,6 +50,7 @@ internal class ListOfGifsFragment : Fragment() {
     private fun FragmentListofGifBinding.initUi() {
         rvListofGif.adapter = adapter
         etSearchField.doAfterTextChanged {
+            rvListofGif.scrollToPosition(0)
             vm.searchTitle(etSearchField.text.toString())
         }
     }

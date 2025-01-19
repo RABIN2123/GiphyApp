@@ -22,10 +22,12 @@ internal class ListOfGifsViewModel(
     private val applicationContext: Context
 ) : ViewModel() {
     private val titleGif = MutableStateFlow("")
+
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val _gifList: Flow<PagingData<GifsInfoModel.GifItem>> = titleGif.flatMapLatest {title ->
-        repository.pagerGifList(title).cachedIn(viewModelScope)
-    }
+    private val _gifList: Flow<PagingData<GifsInfoModel.GifItem>> =
+        titleGif.flatMapLatest { title ->
+            repository.pagerGifList(title)
+        }.cachedIn(viewModelScope)
 
     val gifList = _gifList
 

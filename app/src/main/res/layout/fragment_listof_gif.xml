@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@android:drawable/edit_text"
-        android:hint="@string/et_search_field_string_hilt" />
+        android:hint="@string/et_search_field_string_hilt"
+        android:singleLine="true" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_listof_gif"

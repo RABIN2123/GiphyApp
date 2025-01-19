@@ -1,48 +1,53 @@
 package com.rabin2123.giphyapp.presentation
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
+import com.bumptech.glide.Glide
 import com.rabin2123.domain.Repository
 import com.rabin2123.domain.models.GifsInfoModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class ListOfGifsViewModel(private val repository: Repository) : ViewModel() {
-    private val _gifList = MutableStateFlow<GifsInfoModel?>(null)
-    val gifList: StateFlow<GifsInfoModel?> = _gifList
+class ListOfGifsViewModel(
+    private val repository: Repository,
+    private val applicationContext: Context
+) : ViewModel() {
+    private val _gifList: Flow<PagingData<GifsInfoModel.GifItem>> =
+        repository.pagerGifList().cachedIn(viewModelScope)
+    val gifList = _gifList
 
-    init {
-        initData()
-    }
 
-    private fun initData() {
+//
+//    fun searchTitle(title: String) {
+//
+//    }
+
+    fun preLoadImages() {
         viewModelScope.launch(Dispatchers.IO) {
-            _gifList.update { repository.getGifList(START_PAGE) }
+            gifList.collect { pagerItem ->
+                pagerItem.map { item ->
+                    launch {
+                        Glide.with(applicationContext).downloadOnly().load(item.smallPicUrl)
+                            .submit()
+                    }
+                    launch {
+                        Glide.with(applicationContext).downloadOnly().load(item.fullPicUrl).submit()
+                    }
+                }
+            }
+
         }
     }
 
-    fun loadNextPage() {
-        var currOffset = 0
-        gifList.value?.let { item ->
-            currOffset = item.offset + if (item.status != -1) CHANGE_PAGE else 0
-        }
+    fun hidePost(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _gifList.update {
-                repository.getGifList(
-                page = currOffset
-            ) }
+            repository.hideGif(id)
         }
-    }
-
-    fun searchTitle(title: String) {
-
-    }
-
-    companion object {
-        private const val START_PAGE = 0
-        private const val CHANGE_PAGE = 50
     }
 }

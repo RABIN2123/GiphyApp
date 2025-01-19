@@ -41,6 +41,7 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.room.ktx)
+    implementation(libs.room.paging)
     ksp(libs.room.compiler)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)

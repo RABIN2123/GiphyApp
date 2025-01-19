@@ -1,6 +1,6 @@
 package com.rabin2123.domain.models
 
-import com.rabin2123.data.local.CacheGifEntity
+import com.rabin2123.data.local.cachegifsdb.CacheGifEntity
 import com.rabin2123.data.remote.models.GiphyApiResponse
 
 fun GiphyApiResponse.toDomain(): GifsInfoModel {
@@ -33,13 +33,22 @@ fun List<CacheGifEntity>.toDomain(): GifsInfoModel {
     )
 }
 
-fun GiphyApiResponse.toEntity(): List<CacheGifEntity> {
-    return this.data.map {item ->
-        CacheGifEntity(
-            id = item.id,
-            urlFullPic = item.images.smallImage.url,
-            urlSmallPic = item.images.fixedHeight.url,
-            title = item.title,
-        )
-    }
+fun CacheGifEntity.toDomain():GifsInfoModel.GifItem {
+    return GifsInfoModel.GifItem(
+        id = this.id,
+        smallPicUrl = this.urlSmallPic,
+        fullPicUrl = this.urlFullPic,
+        title = this.title
+    )
 }
+
+//fun GiphyApiResponse.toEntity(): List<CacheGifEntity> {
+//    return this.data.map {item ->
+//        CacheGifEntity(
+//            id = item.id,
+//            urlFullPic = item.images.smallImage.url,
+//            urlSmallPic = item.images.fixedHeight.url,
+//            title = item.title,
+//        )
+//    }
+//}

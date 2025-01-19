@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/frag_main_screen"
-        android:label="Gif list"
         android:name="com.rabin2123.giphyapp.presentation.fragments.listofgifs.ListOfGifsFragment"
+        android:label="Gif list"
         tools:layout="@layout/fragment_listof_gif">
         <action
             android:id="@+id/a_main_screen_to_fragment_slide_picture"
@@ -16,8 +16,13 @@
     </fragment>
     <fragment
         android:id="@+id/frag_slide_picture"
-        tools:layout="@layout/fragment_fullscreen_gif"
+        android:name="com.rabin2123.giphyapp.presentation.fragments.fullscreengifs.FullscreenFragment"
         android:label="test2"
-        android:name="com.rabin2123.giphyapp.presentation.fragments.FullScreenFragment">
+        tools:layout="@layout/fragment_fullscreen_gif">
+        <argument
+            android:name="currentPosition"
+            android:defaultValue="0"
+            app:argType="integer"
+            app:nullable="false" />
     </fragment>
 </navigation>

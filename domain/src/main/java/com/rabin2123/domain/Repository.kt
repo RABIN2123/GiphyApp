@@ -1,11 +1,12 @@
 package com.rabin2123.domain
 
+import androidx.paging.PagingData
 import com.rabin2123.data.remote.models.GiphyApiResponse
 import com.rabin2123.domain.models.GifsInfoModel
+import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    suspend fun getGifList(page: Int): GifsInfoModel
+    fun pagerGifList(): Flow<PagingData<GifsInfoModel.GifItem>>
     suspend fun searchGifList(title: String, page: Int): GifsInfoModel
-    suspend fun insertCacheGifList(gifListInfo: GiphyApiResponse)
-    fun deleteGif()
+    suspend fun hideGif(id: String)
 }

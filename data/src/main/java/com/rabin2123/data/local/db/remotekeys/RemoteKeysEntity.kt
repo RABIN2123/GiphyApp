@@ -1,4 +1,4 @@
-package com.rabin2123.data.local.remotekeys
+package com.rabin2123.data.local.db.remotekeys
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

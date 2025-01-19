@@ -1,4 +1,4 @@
-package com.rabin2123.data.local.cachegifsdb
+package com.rabin2123.data.local.db.cachegifsdb
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -4,19 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.map
-import com.bumptech.glide.Glide
 import com.rabin2123.giphyapp.databinding.FragmentListofGifBinding
 import com.rabin2123.giphyapp.presentation.ListOfGifsViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListOfGifsFragment : Fragment() {
+internal class ListOfGifsFragment : Fragment() {
     private val adapter by lazy {
         ListOfGifsRecyclerAdapter(
             onOpenFullScreen = onOpenFullScreen,
@@ -31,7 +29,7 @@ class ListOfGifsFragment : Fragment() {
     }
 
 
-    private val vm: ListOfGifsViewModel by viewModel()
+    private val vm: ListOfGifsViewModel by viewModel(ownerProducer = {requireActivity()})
     private var binding: FragmentListofGifBinding? = null
 
     override fun onCreateView(
@@ -51,11 +49,9 @@ class ListOfGifsFragment : Fragment() {
 
     private fun FragmentListofGifBinding.initUi() {
         rvListofGif.adapter = adapter
-        vm.preLoadImages()
-//        btnSearch.setOnClickListener {
-//            vm.searchTitle(etSearchField.text.toString())
-//        }
-
+        etSearchField.doAfterTextChanged {
+            vm.searchTitle(etSearchField.text.toString())
+        }
     }
 
     private fun dataObserver() {

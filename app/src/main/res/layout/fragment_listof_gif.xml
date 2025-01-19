@@ -3,26 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingHorizontal="5dp"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="5dp">
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/et_search_field"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/et_search_field"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="48dp" />
-        <Button
-            android:id="@+id/btn_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_string_search"
-            />
-    </LinearLayout>
+        android:layout_height="48dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="@string/et_search_field_string_hilt" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_listof_gif"

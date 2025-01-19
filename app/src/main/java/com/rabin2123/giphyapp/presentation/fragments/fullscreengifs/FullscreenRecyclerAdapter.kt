@@ -1,7 +1,6 @@
 package com.rabin2123.giphyapp.presentation.fragments.fullscreengifs
 
 import android.view.LayoutInflater
-import android.view.RoundedCorner
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -10,16 +9,19 @@ import com.bumptech.glide.Glide
 import com.rabin2123.domain.models.GifsInfoModel
 import com.rabin2123.giphyapp.R
 import com.rabin2123.giphyapp.databinding.FragmentItemFullscreenGifBinding
-import com.rabin2123.giphyapp.databinding.FragmentItemPictureBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
-class FullscreenRecyclerAdapter(
+internal class FullscreenRecyclerAdapter(
     private val onHidePost: ((String) -> Unit),
     private val firstIndex: Int
 
 ) : PagingDataAdapter<GifsInfoModel.GifItem, FullscreenRecyclerAdapter.MyViewHolder>(
     ItemDiffCallBack()
 ) {
-    private var checkPos: Boolean = true
+    val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
             FragmentItemFullscreenGifBinding.inflate(
@@ -31,14 +33,7 @@ class FullscreenRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val item = getItem(
-            if (checkPos) {
-                checkPos = false
-                firstIndex
-            } else {
-                position
-            }
-        )
+        val item = getItem(position)
         if (item != null)
             holder.bind(item)
     }
@@ -54,6 +49,11 @@ class FullscreenRecyclerAdapter(
                     .placeholder(R.drawable.elementor_placeholder_image)
                     .centerInside()
                     .into(ivFullscreen)
+                scope.launch {
+                    Glide.with(root.context.applicationContext).downloadOnly()
+                        .load(gifItem.fullPicUrl)
+                        .submit()
+                }
                 btnHidePost.setOnClickListener { onHidePost(gifItem.id) }
             }
         }

@@ -1,10 +1,12 @@
 package com.rabin2123.data.di
 
-import com.rabin2123.data.local.AppDatabase
-import com.rabin2123.data.local.cachegifsdb.CacheGifListDao
-import com.rabin2123.data.local.AppDatabaseBuilder
-import com.rabin2123.data.local.CacheGifListHelper
-import com.rabin2123.data.local.CacheGifListHelperImpl
+import com.rabin2123.data.CombinedDataRepository
+import com.rabin2123.data.CombinedDataRepositoryImpl
+import com.rabin2123.data.local.db.AppDatabase
+import com.rabin2123.data.local.db.cachegifsdb.CacheGifListDao
+import com.rabin2123.data.local.db.AppDatabaseBuilder
+import com.rabin2123.data.local.db.helper.CacheGifListHelper
+import com.rabin2123.data.local.db.helper.CacheGifListHelperImpl
 import com.rabin2123.data.paging.GifsRemoteMediator
 import com.rabin2123.data.remote.ApiHelper
 import com.rabin2123.data.remote.ApiHelperImpl
@@ -19,18 +21,14 @@ val dataModule
         single<AppDatabase> {
             AppDatabaseBuilder.getDatabaseCacheGifList(get())
         }
+
         single<CacheGifListDao> { get<AppDatabase>().getCacheDao }
         singleOf(::CacheGifListHelperImpl) { bind<CacheGifListHelper>() }
 
-        single<GiphyService> {
-            RetrofitBuilder.giphyService
-        }
+        single<GiphyService> { RetrofitBuilder.giphyService }
         singleOf(::ApiHelperImpl) { bind<ApiHelper>() }
 
-        single {
-            GifsRemoteMediator(
-                gifsDb = get(),
-                gifsApi = get()
-            )
-        }
+        singleOf(::GifsRemoteMediator)
+
+        singleOf(::CombinedDataRepositoryImpl) { bind<CombinedDataRepository>() }
     }

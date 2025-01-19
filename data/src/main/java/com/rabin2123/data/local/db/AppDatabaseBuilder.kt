@@ -1,9 +1,9 @@
-package com.rabin2123.data.local
+package com.rabin2123.data.local.db
 
 import android.content.Context
 import androidx.room.Room
 
-object AppDatabaseBuilder {
+internal object AppDatabaseBuilder {
     @Volatile
     private var INSTANCE: AppDatabase? = null
     fun getDatabaseCacheGifList(context: Context) = INSTANCE ?: synchronized(this) {

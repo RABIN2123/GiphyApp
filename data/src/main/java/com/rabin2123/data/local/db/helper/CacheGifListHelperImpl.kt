@@ -1,17 +1,13 @@
-package com.rabin2123.data.local
+package com.rabin2123.data.local.db.helper
 
 import androidx.paging.PagingSource
-import com.rabin2123.data.local.cachegifsdb.CacheGifEntity
-import com.rabin2123.data.local.cachegifsdb.CacheGifListDao
+import com.rabin2123.data.local.db.cachegifsdb.CacheGifEntity
+import com.rabin2123.data.local.db.cachegifsdb.CacheGifListDao
 
 internal class CacheGifListHelperImpl(private val dao: CacheGifListDao) : CacheGifListHelper {
 
     override fun pagerGifs(): PagingSource<Int, CacheGifEntity> {
         return dao.pagingSource()
-    }
-
-    override suspend fun searchGifList(title: String): List<CacheGifEntity> {
-        return dao.searchLocalGif(title)
     }
 
     override suspend fun hideGif(id: String) {

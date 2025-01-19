@@ -10,23 +10,28 @@ import com.bumptech.glide.Glide
 import com.rabin2123.domain.Repository
 import com.rabin2123.domain.models.GifsInfoModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ListOfGifsViewModel(
+internal class ListOfGifsViewModel(
     private val repository: Repository,
     private val applicationContext: Context
 ) : ViewModel() {
-    private val _gifList: Flow<PagingData<GifsInfoModel.GifItem>> =
-        repository.pagerGifList().cachedIn(viewModelScope)
+    private val titleGif = MutableStateFlow("")
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val _gifList: Flow<PagingData<GifsInfoModel.GifItem>> = titleGif.flatMapLatest {title ->
+        repository.pagerGifList(title).cachedIn(viewModelScope)
+    }
+
     val gifList = _gifList
 
-
-//
-//    fun searchTitle(title: String) {
-//
-//    }
+    fun searchTitle(title: String) {
+        titleGif.update { title }
+    }
 
     fun preLoadImages() {
         viewModelScope.launch(Dispatchers.IO) {

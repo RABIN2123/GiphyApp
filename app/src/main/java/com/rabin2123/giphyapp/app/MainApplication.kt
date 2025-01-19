@@ -10,8 +10,7 @@ import org.koin.core.logger.Level
 import org.koin.dsl.koinConfiguration
 
 @OptIn(KoinExperimentalAPI::class)
-class MainApplication: Application(), KoinStartup {
-
+class MainApplication : Application(), KoinStartup {
 
     override fun onKoinStartup() = koinConfiguration {
         androidLogger(Level.DEBUG)

@@ -1,4 +1,4 @@
-package com.rabin2123.data.local.remotekeys
+package com.rabin2123.data.local.db.remotekeys
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -12,7 +12,7 @@ interface RemoteKeysDao {
     suspend fun insertAll(remoteKey: List<RemoteKeysEntity>)
 
     @Query("SELECT * FROM ${RemoteKeysEntity.TABLE_NAME} WHERE ${RemoteKeysEntity.COLUMN_ID} = :id")
-    suspend fun remoteKeysDoggoId(id: String): RemoteKeysEntity?
+    suspend fun remoteKeysId(id: String): RemoteKeysEntity?
 
     @Query("DELETE FROM ${RemoteKeysEntity.TABLE_NAME}")
     suspend fun clearRemoteKeys()

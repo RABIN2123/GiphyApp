@@ -1,4 +1,4 @@
-package com.rabin2123.data.local.cachegifsdb
+package com.rabin2123.data.local.db.cachegifsdb
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
@@ -16,9 +16,6 @@ interface CacheGifListDao {
 
     @Query("SELECT * FROM ${CacheGifEntity.TABLE_NAME} WHERE ${CacheGifEntity.COLUMN_VISIBLE} = 1")
     fun pagingSource(): PagingSource<Int, CacheGifEntity>
-
-    @Query("SELECT * FROM ${CacheGifEntity.TABLE_NAME} WHERE ${CacheGifEntity.COLUMN_TITLE} LIKE :searchTitle")
-    suspend fun searchLocalGif(searchTitle: String): List<CacheGifEntity>
 
     @Query("DELETE FROM ${CacheGifEntity.TABLE_NAME} WHERE ${CacheGifEntity.COLUMN_VISIBLE} = 1")
     suspend fun deleteAllGifList()

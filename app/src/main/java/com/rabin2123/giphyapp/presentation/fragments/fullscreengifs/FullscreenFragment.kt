@@ -13,19 +13,19 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class FullscreenFragment : Fragment() {
-    private val selectedIndex by lazy {
+    private val firstIndex by lazy {
         arguments?.let { FullscreenFragmentArgs.fromBundle(it).currentPosition } ?: 0
     }
 
     private val adapter by lazy {
         FullscreenRecyclerAdapter(
             onHidePost = vm::hidePost,
-            firstIndex = selectedIndex
+            firstIndex = firstIndex
         )
     }
     private var binding: FragmentFullscreenGifBinding? = null
 
-    private val vm: ListOfGifsViewModel by viewModel(ownerProducer = {requireActivity()})
+    private val vm: ListOfGifsViewModel by viewModel(ownerProducer = { requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater,

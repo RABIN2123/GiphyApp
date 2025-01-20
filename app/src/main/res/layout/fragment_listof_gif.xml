@@ -13,12 +13,23 @@
         android:layout_height="48dp"
         android:background="@android:drawable/edit_text"
         android:hint="@string/et_search_field_string_hilt"
-        android:singleLine="true" />
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_listof_gif"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srl_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/fragment_item_picture" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_listof_gif"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/fragment_item_picture" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

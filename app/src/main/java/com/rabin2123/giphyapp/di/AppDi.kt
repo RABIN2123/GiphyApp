@@ -10,8 +10,7 @@ val appModule
         includes(domainModule)
         viewModel {
             ListOfGifsViewModel(
-                repository = get(),
-                applicationContext = get()
+                repository = get()
             )
         }
     }

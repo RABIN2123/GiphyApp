@@ -22,6 +22,12 @@ internal class FullscreenRecyclerAdapter(
     ItemDiffCallBack()
 ) {
     val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        recyclerView.scrollToPosition(firstIndex)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
             FragmentItemFullscreenGifBinding.inflate(
@@ -44,13 +50,16 @@ internal class FullscreenRecyclerAdapter(
         fun bind(gifItem: GifsInfoModel.GifItem) {
             with(binding) {
                 tvTitle.text = gifItem.title
-                Glide.with(root.context.applicationContext)
+                Glide
+                    .with(root.context.applicationContext)
                     .load(gifItem.fullPicUrl)
                     .placeholder(R.drawable.elementor_placeholder_image)
                     .centerInside()
                     .into(ivFullscreen)
                 scope.launch {
-                    Glide.with(root.context.applicationContext).downloadOnly()
+                    Glide
+                        .with(root.context.applicationContext)
+                        .downloadOnly()
                         .load(gifItem.fullPicUrl)
                         .submit()
                 }

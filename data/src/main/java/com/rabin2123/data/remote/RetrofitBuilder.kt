@@ -9,6 +9,8 @@ internal object RetrofitBuilder {
     internal const val API_KEY = "miIxt3Gl7YaZErQR3DRlAGRuRDjZHruk"
 
     private fun getRetrofit() =
-        Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
+            .build()
+
     val giphyService: GiphyService = getRetrofit().create(GiphyService::class.java)
 }

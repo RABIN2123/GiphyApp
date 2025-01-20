@@ -10,6 +10,10 @@ internal class CacheGifListHelperImpl(private val dao: CacheGifListDao) : CacheG
         return dao.pagingSource()
     }
 
+    override fun searchPagerGifs(title: String): PagingSource<Int, CacheGifEntity> {
+        return dao.searchPagingSource("%$title%")
+    }
+
     override suspend fun hideGif(id: String) {
         dao.hideGif(id)
     }

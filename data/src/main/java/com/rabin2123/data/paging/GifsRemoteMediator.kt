@@ -1,5 +1,6 @@
 package com.rabin2123.data.paging
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -35,6 +36,7 @@ internal class GifsRemoteMediator(
             }
         }
         try {
+
             val response = if (title.isEmpty()) {
                 gifsApi.getGifs(
                     page = page,
@@ -49,6 +51,10 @@ internal class GifsRemoteMediator(
             }
 
             val isEndOfList = response.data.isEmpty()
+            Log.d(
+                "RemoteMediator",
+                "page: $page; limit: ${state.config.pageSize}; title: $title; loadType: $loadType; isEndOfList: $isEndOfList"
+            )
             appDb.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     appDb.getRemoveKeyDao.clearRemoteKeys()
@@ -82,16 +88,20 @@ internal class GifsRemoteMediator(
         return when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getClosestRemoteKey(state)
+                Log.d("RemoteMediator", "LoadType.REFRESH: $remoteKeys")
                 remoteKeys?.nextKey?.minus(PAGE_SIZE) ?: DEFAULT_PAGE_INDEX
+
             }
 
             LoadType.APPEND -> {
                 val remoteKeys = getLastRemoteKey(state)
-                remoteKeys?.nextKey ?: DEFAULT_PAGE_INDEX
+                Log.d("RemoteMediator", "LoadType.APPEND: $remoteKeys")
+                remoteKeys?.nextKey ?: PAGE_SIZE
             }
 
             LoadType.PREPEND -> {
                 val remoteKeys = getFirstRemoteKey(state)
+                Log.d("RemoteMediator", "LoadType.PREPEND: $remoteKeys")
                 remoteKeys?.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
                 remoteKeys.prevKey
             }

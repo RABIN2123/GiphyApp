@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
     implementation(libs.glide)
     implementation(libs.paging.runtime)
+    implementation(libs.swipe.refresh)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

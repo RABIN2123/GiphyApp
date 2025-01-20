@@ -8,7 +8,7 @@ import com.rabin2123.data.local.db.remotekeys.RemoteKeysDao
 import com.rabin2123.data.local.db.remotekeys.RemoteKeysEntity
 
 @Database(entities = [CacheGifEntity::class, RemoteKeysEntity::class], version = 1)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract val getCacheDao: CacheGifListDao
     abstract val getRemoveKeyDao: RemoteKeysDao
 }

@@ -17,6 +17,9 @@ interface CacheGifListDao {
     @Query("SELECT * FROM ${CacheGifEntity.TABLE_NAME} WHERE ${CacheGifEntity.COLUMN_VISIBLE} = 1")
     fun pagingSource(): PagingSource<Int, CacheGifEntity>
 
+    @Query("SELECT * FROM ${CacheGifEntity.TABLE_NAME} WHERE ${CacheGifEntity.COLUMN_VISIBLE} = 1 AND ${CacheGifEntity.COLUMN_TITLE} LIKE :title")
+    fun searchPagingSource(title: String): PagingSource<Int, CacheGifEntity>
+
     @Query("DELETE FROM ${CacheGifEntity.TABLE_NAME} WHERE ${CacheGifEntity.COLUMN_VISIBLE} = 1")
     suspend fun deleteAllGifList()
 }

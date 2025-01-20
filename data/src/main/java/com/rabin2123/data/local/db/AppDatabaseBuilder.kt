@@ -11,7 +11,8 @@ internal object AppDatabaseBuilder {
             .databaseBuilder(
                 context,
                 AppDatabase::class.java,
-                "database.db")
+                "database.db"
+            )
             .build()
         INSTANCE = instance
         instance

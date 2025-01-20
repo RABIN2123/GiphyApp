@@ -18,20 +18,24 @@ data class GiphyApiResponse(
         @SerializedName("title")
         val title: String
     )
+
     data class Images(
         @SerializedName("fixed_width_downsampled")
         val smallImage: Url,
         @SerializedName("fixed_height")
         val fixedHeight: Url
     )
+
     data class Url(
         @SerializedName("url")
         val url: String
     )
+
     data class Status(
         @SerializedName("status")
         val status: Int
     )
+
     data class Pagination(
         @SerializedName("offset")
         val offset: Int

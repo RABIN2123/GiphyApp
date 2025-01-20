@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 internal class ListOfGifsRecyclerAdapter(
     private val onOpenFullScreen: (Int) -> Unit,
-    private val onHidePost: ((String) -> Unit)
+    private val onHidePost: ((String, String, String) -> Unit)
 ) : PagingDataAdapter<GifsInfoModel.GifItem, ListOfGifsRecyclerAdapter.MyViewHolder>(
     ItemDiffCallBack()
 ) {
@@ -49,7 +49,9 @@ internal class ListOfGifsRecyclerAdapter(
                         .submit()
                 }
                 ivThumbnail.setOnClickListener { onItemClicked(bindingAdapterPosition) }
-                btnHidePost.setOnClickListener { onHidePost(gifItem.id) }
+                btnHidePost.setOnClickListener {
+                    onHidePost(gifItem.id, gifItem.smallPicUrl, gifItem.fullPicUrl)
+                }
             }
         }
     }

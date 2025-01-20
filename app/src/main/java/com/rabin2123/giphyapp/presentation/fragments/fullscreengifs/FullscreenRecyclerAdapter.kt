@@ -15,7 +15,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 internal class FullscreenRecyclerAdapter(
-    private val onHidePost: ((String) -> Unit),
+    private val onHidePost: ((String, String, String) -> Unit),
     private val firstIndex: Int
 
 ) : PagingDataAdapter<GifsInfoModel.GifItem, FullscreenRecyclerAdapter.MyViewHolder>(
@@ -63,7 +63,13 @@ internal class FullscreenRecyclerAdapter(
                         .load(gifItem.fullPicUrl)
                         .submit()
                 }
-                btnHidePost.setOnClickListener { onHidePost(gifItem.id) }
+                btnHidePost.setOnClickListener {
+                    onHidePost(
+                        gifItem.id,
+                        gifItem.smallPicUrl,
+                        gifItem.fullPicUrl
+                    )
+                }
             }
         }
     }

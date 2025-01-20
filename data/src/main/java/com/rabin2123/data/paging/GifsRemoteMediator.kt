@@ -133,6 +133,6 @@ internal class GifsRemoteMediator(
 
     companion object {
         const val DEFAULT_PAGE_INDEX = 0
-        const val PAGE_SIZE = 10
+        const val PAGE_SIZE = 25
     }
 }
